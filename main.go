@@ -1,11 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 func main() {
 	hello_convertor()
-	fromCurrency()
-	output_currency()
+	result := currencyConverter()
+	fmt.Println(result)
 }
 func hello_convertor() {
 	fmt.Println("Добро пожаловать в конвертор валют!")
@@ -19,16 +22,16 @@ func fromCurrency() string {
 		switch curencyUser {
 		case "USD", "1":
 			fmt.Println("Вы выбрали: USD")
-			return curencyUser
+			return "USD"
 		case "EUR", "2":
 			fmt.Println("Вы выбрали: EUR")
-			return curencyUser
+			return "EUR"
 		case "CNY", "3":
 			fmt.Println("Вы выбрали: CNY")
-			return curencyUser
+			return "CNY"
 		case "JPY", "4":
 			fmt.Println("Вы выбрали: JPY")
-			return curencyUser
+			return "JPY"
 		default:
 			fmt.Println("Такой валюты нет!")
 			continue
@@ -45,16 +48,16 @@ func selectedCurrency() string {
 		switch outCurrency {
 		case "RUB", "1":
 			fmt.Println("Вы выбрали: RUB")
-			return outCurrency
+			return "RUB"
 		case "GBP", "2":
 			fmt.Println("Вы выбрали: GBP")
-			return outCurrency
+			return "GBP"
 		case "KZT", "3":
 			fmt.Println("Вы выбрали: KZT")
-			return outCurrency
+			return "KZT"
 		case "TRY", "4":
 			fmt.Println("Вы выбрали: TRY")
-			return outCurrency
+			return "TRY"
 		default:
 			fmt.Println("Такой валюты нет!")
 			continue
@@ -62,72 +65,78 @@ func selectedCurrency() string {
 	}
 
 }
-func sumCurrency() int {
-	fmt.Println("Ввведите сумму для обмена:")
-	sum := 0
-	fmt.Scan(&sum)
+func sumCurrency() float64 {
+	input := ""
+	sum := 0.0
+	for {
+		fmt.Println("Введите сумму для обмена:")
+		fmt.Scan(&input)
+		val, err := strconv.ParseFloat(input, 64)
+		if err != nil {
+			fmt.Println("Введите числовое значение!")
+			continue
+		} else {
+			sum = val
+			break
+		}
+
+	}
 	return sum
 }
-func currencyConverter() float64 {
-	sum := sumCurrency()
+func currencyConverter() string {
 	result := 0.0
 	inputUserCurrency := fromCurrency()
 	outoutUserCurrency := selectedCurrency()
+	sum := sumCurrency()
 	if inputUserCurrency == "USD" && outoutUserCurrency == "RUB" {
-		result = float64(sum) * 83.01
+		result = sum * 83.01
 	} else if inputUserCurrency == "USD" && outoutUserCurrency == "GBP" {
-		result = float64(sum) * 0.78
+		result = sum * 0.78
 
 	} else if inputUserCurrency == "USD" && outoutUserCurrency == "KZT" {
-		result = float64(sum) * 447.14
+		result = sum * 447.14
 
 	} else if inputUserCurrency == "USD" && outoutUserCurrency == "TRY" {
 
-		result = float64(sum) * 34.20
+		result = sum * 34.20
 	}
 	if inputUserCurrency == "EUR" && outoutUserCurrency == "RUB" {
-		result = float64(sum) * 90.11
+		result = sum * 90.11
 	} else if inputUserCurrency == "EUR" && outoutUserCurrency == "GBP" {
-		result = float64(sum) * 0.85
+		result = sum * 0.85
 
 	} else if inputUserCurrency == "EUR" && outoutUserCurrency == "KZT" {
-		result = float64(sum) * 485.20
+		result = sum * 485.20
 
 	} else if inputUserCurrency == "EUR" && outoutUserCurrency == "TRY" {
 
-		result = float64(sum) * 37.10
+		result = sum * 37.10
 	}
 	if inputUserCurrency == "CNY" && outoutUserCurrency == "RUB" {
-		result = float64(sum) * 11.49
+		result = sum * 11.49
 	} else if inputUserCurrency == "CNY" && outoutUserCurrency == "GBP" {
-		result = float64(sum) * 0.11
+		result = sum * 0.11
 
 	} else if inputUserCurrency == "CNY" && outoutUserCurrency == "KZT" {
-		result = float64(sum) * 61.40
+		result = sum * 61.40
 
 	} else if inputUserCurrency == "CNY" && outoutUserCurrency == "TRY" {
 
-		result = float64(sum) * 4.70
+		result = sum * 4.70
 	}
 	if inputUserCurrency == "JPY" && outoutUserCurrency == "RUB" {
-		result = float64(sum) * 0.53
+		result = sum * 0.53
 	} else if inputUserCurrency == "JPY" && outoutUserCurrency == "GBP" {
-		result = float64(sum) * 0.0051
+		result = sum * 0.0051
 
 	} else if inputUserCurrency == "JPY" && outoutUserCurrency == "KZT" {
-		result = float64(sum) * 2.85
+		result = sum * 2.85
 
 	} else if inputUserCurrency == "JPY" && outoutUserCurrency == "TRY" {
 
-		result = float64(sum) * 0.22
+		result = sum * 0.22
 	}
 
-	return result
-}
-
-func output_currency() {
-	res := currencyConverter()
-	inputCurrency := fromCurrency()
-	outputCurrency := selectedCurrency()
-	fmt.Printf("Вы выбрали обменять: %s на %s\nИтоговая сумма которую вы получаете: %.2f", inputCurrency, outputCurrency, res)
+	resultF := fmt.Sprintf("Вы выбрали обменять: %s на %s\nИтоговая сумма которую вы получаете: %.2f", inputUserCurrency, outoutUserCurrency, result)
+	return resultF
 }
