@@ -141,3 +141,5 @@ func currencyConverter() string {
 	resultF := fmt.Sprintf("Вы выбрали обменять: %s на %s\nИтоговая сумма которую вы получаете: %.2f", inputUserCurrency, outoutUserCurrency, result)
 	return resultF
 }
+
+//
