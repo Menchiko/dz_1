@@ -85,9 +85,10 @@ func sumCurrency() float64 {
 }
 func currencyConverter() string {
 	result := 0.0
+	sum := sumCurrency()
 	inputUserCurrency := fromCurrency()
 	outoutUserCurrency := selectedCurrency()
-	sum := sumCurrency()
+
 	if inputUserCurrency == "USD" && outoutUserCurrency == "RUB" {
 		result = sum * 83.01
 	} else if inputUserCurrency == "USD" && outoutUserCurrency == "GBP" {
@@ -140,3 +141,5 @@ func currencyConverter() string {
 	resultF := fmt.Sprintf("Вы выбрали обменять: %s на %s\nИтоговая сумма которую вы получаете: %.2f", inputUserCurrency, outoutUserCurrency, result)
 	return resultF
 }
+
+//
