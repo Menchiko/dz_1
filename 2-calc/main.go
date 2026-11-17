@@ -15,7 +15,10 @@ func main() {
 func swithFunc() string {
 	fmt.Println("Выберите операцию-AVG-SUM-MED")
 	txtUser := " "
-	fmt.Scan(&txtUser)
+	reader := bufio.NewReader(os.Stdin)
+	txtUser, _ = reader.ReadString('\n')
+	txtUser = strings.TrimSpace(txtUser)
+
 	switch txtUser {
 	case "AVG":
 		txtUser = "AVG"
@@ -34,7 +37,7 @@ func resultCalc() {
 		avg()
 	} else if res == "SUM" {
 		sum()
-	} else {
+	} else if res == "MED" {
 		med()
 	}
 }
@@ -51,6 +54,7 @@ func inputUserNumbers() []int {
 		input = strings.TrimSpace(input)
 		inputBufio = strings.Split(input, ",")
 		for _, val := range inputBufio {
+			val = strings.TrimSpace(val)
 			num, err := strconv.Atoi(val)
 			if err != nil {
 				fmt.Println("Ввел букву")
